@@ -1,10 +1,17 @@
 // Listen for submit
-document
-  .getElementById("load-form")
-  .addEventListener("submit", calculateResults);
+document.getElementById("load-form").addEventListener("submit", function (e) {
+  // Hide results
+  document.getElementById("results").style.display = "none";
+
+  // show loader
+  document.getElementById("loading").style.display = "block";
+
+  setTimeout(calculateResults, 2000);
+  e.preventDefault();
+});
 
 // Calculate Results
-function calculateResults(e) {
+function calculateResults() {
   // UI Vars
   const amount = document.getElementById("amount");
   const interest = document.getElementById("interest");
@@ -25,14 +32,23 @@ function calculateResults(e) {
     monthlypayment.value = monthly.toFixed(2);
     totalpayment.value = (monthly * calculatedPayments).toFixed(2);
     totalinterest.value = (monthly * calculatedPayments - principal).toFixed(2);
+    // show results
+    document.getElementById("results").style.display = "block";
+
+    // Hide loader
+    document.getElementById("loading").style.display = "none";
   } else {
     showError("Please check your number again");
   }
-  e.preventDefault();
 }
 
 // show Error
 function showError(error) {
+  // show results
+  document.getElementById("results").style.display = "none";
+
+  // Hide loader
+  document.getElementById("loading").style.display = "none";
   // create a div
   const errorDiv = document.createElement("div");
 
